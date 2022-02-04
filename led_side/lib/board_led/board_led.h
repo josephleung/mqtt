@@ -1,14 +1,15 @@
-#ifndef EXT_LED_H /* include guards */
-#define EXT_LED_H
+#ifndef BOARD_LED_H /* include guards */
+#define BOARD_LED_H
 
 #include "Arduino.h"
 
-#include <Adafruit_NeoPixel.h>
-#define LED_PIN 21
-#define LED_COUNT 5
-#define BRIGHTNESS 255 // Set BRIGHTNESS to about 1/5 (max = 255)
+#define BOARD_LED_PIN 13
 
-void init_ext_led();
-void set_ext_led(unsigned int red, unsigned int green, unsigned int blue, unsigned int white);
+#define BOARD_LED_OFF 0
+#define BOARD_LED_ON 1
 
-#endif /* EXT_LED_H */
+
+void board_led_init();
+void board_led_set(unsigned int val);
+
+#endif /* BOARD_LED_H */

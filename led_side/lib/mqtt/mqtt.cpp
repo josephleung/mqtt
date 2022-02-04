@@ -28,8 +28,8 @@ int mqtt_init(void)
     Serial.print("Connecting to MQTT... ");
     while ((ret = mqtt.connect()) != 0)
     { // connect will return 0 for connected
-        DBG_PRINT("%s", mqtt.connectErrorString(ret));
-        DBG_PRINT("Retrying MQTT connection in 5 seconds...");
+        PRINT("%s", mqtt.connectErrorString(ret));
+        PRINT("Retrying MQTT connection in 5 seconds...");
         mqtt.disconnect();
         delay(5000); // wait 5 seconds
         retries--;
@@ -39,7 +39,7 @@ int mqtt_init(void)
         }
     }
 
-    DBG_PRINT("%s", "MQTT Connected!");
+    PRINT("%s", "MQTT Connected!");
     return MQTT_SUCCESS;
 }
 
@@ -58,11 +58,11 @@ int mqtt_update(unsigned int *p_red, unsigned int *p_blue, unsigned int *p_green
 
     if (subscription == &sub_led_switch)
     {
-        PRINT(("Got sub_led_switch: "));
-        PRINT((char *)sub_led_switch.lastread);
+        DBGPRINT(("Got sub_led_switch: "));
+        DBGPRINT((char *)sub_led_switch.lastread);
         memcpy(command, (char *)sub_led_switch.lastread, sizeof(LED_switch));
         // command.trim();
-        PRINT("switch command: %s\n", command);
+        DBGPRINT("switch command: %s\n", command);
         LED_switch = command[0] - '0';
         if (LED_switch == 1)
         {
@@ -77,10 +77,10 @@ int mqtt_update(unsigned int *p_red, unsigned int *p_blue, unsigned int *p_green
     }
     else if (subscription == &sub_led_color)
     {
-        PRINT("Got sub_led_color: ");
-        PRINT((char *)sub_led_color.lastread);
+        DBGPRINT("Got sub_led_color: ");
+        DBGPRINT((char *)sub_led_color.lastread);
         memcpy(command, (char *)sub_led_color.lastread, sizeof(command));
-        PRINT("color command: %s\n", command);
+        DBGPRINT("color command: %s\n", command);
 
         int length = LEN_OF_COLOR_CMD;
         int i;

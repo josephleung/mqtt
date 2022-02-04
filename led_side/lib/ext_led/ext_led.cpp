@@ -22,5 +22,5 @@ void ext_led_init()
 void set_ext_led(unsigned int red, unsigned int green, unsigned int blue, unsigned int white)
 {
     colorWipe(strip.Color(red, green, blue, white), 0);
-    DBG_PRINT("red: %d, green: %d, blue: %d, white: %d", red, green, blue, white);
+    DBGPRINT("red: %d, green: %d, blue: %d, white: %d", red, green, blue, white);
 }
