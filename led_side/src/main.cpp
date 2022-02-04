@@ -1,6 +1,8 @@
 #include <Arduino.h>
 
-#include "comm.h"
+#include "c_wifi.h"
+#include "mqtt.h"
+#include "ext_led.h"
 
 void setup()
 {
@@ -8,18 +10,22 @@ void setup()
   delay(10);
 
   Serial.println(F("LED side MQTT"));
-  comm_init();
-  MQTT_connect();
+
+  c_wifi_init();
+  mqtt_init();
+  ext_led_init();
+
 }
 
 void loop()
 {
-  // Ensure the connection to the MQTT server is alive (this will make the first
-  // connection and automatically reconnect when disconnected).  See the MQTT_connect
-  // function definition further below.
+  unsigned int red, green, blue, white;
+  unsigned int mqtt_result;
 
-  // this is our 'wait for incoming subscription packets' busy subloop
-  // try to spend your time here
+  mqtt_result = mqtt_update(&red, &green, &blue, &white);
+  if (mqtt_result == MQTT_UPDATE)
+  {
+    set_ext_led(red, green, blue, white);
+  }
 
-  subUpdate();
 }
