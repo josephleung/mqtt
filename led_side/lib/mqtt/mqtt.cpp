@@ -2,7 +2,6 @@
 
 extern WiFiClientSecure client;
 
-
 // Setup the MQTT client class by passing in the WiFi client and MQTT server and login details.
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
@@ -49,6 +48,7 @@ int mqtt_update(unsigned int *p_red, unsigned int *p_blue, unsigned int *p_green
     unsigned int LEN_OF_COLOR_CMD = 7;
     char command[LEN_OF_COLOR_CMD];
     unsigned int red = 0, green = 0, blue = 0, white = 0;
+    unsigned int ping_retry = 101;
 
     Adafruit_MQTT_Subscribe *subscription;
 
@@ -113,7 +113,8 @@ int mqtt_update(unsigned int *p_red, unsigned int *p_blue, unsigned int *p_green
 
     // ping the server to keep the mqtt connection alive
     // NOT required if you are publishing once every KEEPALIVE seconds
-    if (!mqtt.ping())
+    while (!mqtt.ping() && (--ping_retry));
+    if (ping_retry == 0)
     {
         mqtt.disconnect();
         ret = MQTT_FAIL;
@@ -123,6 +124,6 @@ int mqtt_update(unsigned int *p_red, unsigned int *p_blue, unsigned int *p_green
     *p_green = green;
     *p_blue = blue;
     *p_white = white;
-    
+
     return ret;
 }
