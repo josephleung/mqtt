@@ -17,8 +17,9 @@
 
 #define MQTT_SUCCESS 0
 #define MQTT_FAIL 1
-#define MQTT_UPDATE 2
-#define MQTT_NO_UPDATE 3
+#define MQTT_UPDATE_WHITE 2
+#define MQTT_UPDATE_RGB 3
+#define MQTT_NO_UPDATE 4
 
 int mqtt_init(void);
 int mqtt_update(unsigned int *p_red, unsigned int *p_blue, unsigned int *p_green, unsigned int *p_white);

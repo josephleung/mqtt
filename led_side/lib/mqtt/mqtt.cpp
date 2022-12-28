@@ -73,7 +73,7 @@ int mqtt_update(unsigned int *p_red, unsigned int *p_blue, unsigned int *p_green
             white = 0;
         }
 
-        ret = MQTT_UPDATE;
+        ret = MQTT_UPDATE_WHITE;
     }
     else if (subscription == &sub_led_color)
     {
@@ -102,13 +102,13 @@ int mqtt_update(unsigned int *p_red, unsigned int *p_blue, unsigned int *p_green
         }
 
         red = (out[1] << 4) | out[2];
-        green = (out[3] << 4) | out[4];
-        blue = (out[5] << 4) | out[6];
+        blue = (out[3] << 4) | out[4];
+        green = (out[5] << 4) | out[6];
 
         // printf("red: 0x%x\n", red);
         // printf("green: 0x%x\n", green);
         // printf("blue: 0x%x\n", blue);
-        ret = MQTT_UPDATE;
+        ret = MQTT_UPDATE_RGB;
     }
 
     // ping the server to keep the mqtt connection alive

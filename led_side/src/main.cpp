@@ -34,7 +34,7 @@ void loop()
 
 //TODO: only update the updated color, do not touch non-updated ones
   mqtt_result = mqtt_update(&red, &green, &blue, &white);
-  if (mqtt_result == MQTT_UPDATE)
+  if (mqtt_result == MQTT_UPDATE_WHITE)
   {
     set_ext_led(red, green, blue, white);
   }
